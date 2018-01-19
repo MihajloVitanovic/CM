@@ -4,32 +4,21 @@ package ch.lebo_apps.contactme;
  * Created by miki-ubuntu on 15.1.18..
  */
 
-        import java.io.IOException;
-        import java.io.InputStream;
         import java.util.ArrayList;
         import java.util.Collections;
         import java.util.Comparator;
         import java.util.List;
         import android.app.Activity;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.res.AssetManager;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
         import android.support.v4.app.FragmentManager;
-        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.AdapterView;
         import android.widget.AdapterView.OnItemClickListener;
-        import android.widget.AdapterView.OnItemLongClickListener;
-        import android.widget.Button;
         import android.widget.ImageButton;
         import android.widget.ImageView;
-        import android.widget.ListView;
         import android.widget.Toast;
 
         import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -78,22 +67,22 @@ public class ProductListFragment extends Fragment implements
     }
 
     private void setProducts() {
-        Product product1 = new Product(1, "Shelley B. Johnson", "620-688-8204", "pic1.png");
+        Product product1 = new Product(1, "Shelly B. Johnson", "620-688-8204", "pic1.png");
         Product product2 = new Product(2, "Ronald M. Strout",
                 "713-513-7638", "pic2.png");
-        Product product3 = new Product(5, "Marc C. Dale",
-                "770-273-7513", "pic1.png");
+        Product product3 = new Product(5, "Ashley C. Dale",
+                "770-273-7513", "pic4.png");
         Product product4 = new Product(6, "Wanda E. Barcenas", "770-273-7513", "pic2.png");
         Product product5 = new Product(7, "James M. Pfister",
                 "620-688-8204", "pic3.png");
-        Product product6 = new Product(8, "David C. Davies",
-                "770-273-7513", "pic1.png");
-        Product product7 = new Product(9, "Eric C. Wysong",
-                "770-273-7513",  "pic2.png");
+        Product product6 = new Product(8, "Mark C. Davies",
+                "770-273-7513", "pic4.png");
+        Product product7 = new Product(9, "John C. Wysong",
+                "770-273-7513",  "pic1.png");
         Product product8 = new Product(10, "Ruby J. Lombard",
                 "620-688-8204", "pic3.png");
         Product product9 = new Product(10, "Samuel N. Andrews",
-                "337-294-5048", "pic1.png");
+                "337-294-5048", "pic4.png");
         Product product10 = new Product(10, "Christine G. Ford",
                 "678-463-4837", "pic2.png");
 

@@ -6,14 +6,10 @@ package ch.lebo_apps.contactme;
         import java.util.ArrayList;
         import java.util.Arrays;
         import java.util.List;
-
         import android.content.Context;
         import android.content.SharedPreferences;
         import android.content.SharedPreferences.Editor;
-
         import com.google.gson.Gson;
-
-        import ch.lebo_apps.contactme.Product;
 
 public class SharedPreference {
 

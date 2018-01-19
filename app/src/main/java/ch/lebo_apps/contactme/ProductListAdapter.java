@@ -90,18 +90,6 @@ public class ProductListAdapter extends ArrayAdapter<Product> implements StickyL
         drawable = Drawable.createFromStream(is, null);
             holder.profilePic.setImageDrawable(drawable);
 
-
-        /*ImageView ivImage = (ImageView) getView().findViewById(R.id.iv_image);
-        InputStream is = null;
-        try {
-            is = getActivity().getAssets().open(FoodProvider.getFoodById(position).getImage());
-            Drawable drawable = Drawable.createFromStream(is, null);
-            ivImage.setImageDrawable(drawable);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
-
 		/*If a product exists in shared preferences then set heart_red drawable
 		 * and set a tag*/
         if (checkFavoriteItem(product)) {

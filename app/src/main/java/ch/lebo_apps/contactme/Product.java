@@ -1,8 +1,5 @@
 package ch.lebo_apps.contactme;
 
-import android.graphics.Bitmap;
-import android.widget.ImageView;
-
 /**
  * Created by miki-ubuntu on 15.1.18..
  */
