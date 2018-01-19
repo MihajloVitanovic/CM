@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ContactMe.iml" filepath="$PROJECT_DIR$/ContactMe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libs/StickyListHeaders/StickyListHeaders.iml" filepath="$PROJECT_DIR$/libs/StickyListHeaders/StickyListHeaders.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

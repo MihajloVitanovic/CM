@@ -4,12 +4,22 @@ package ch.lebo_apps.contactme;
  * Created by miki-ubuntu on 15.1.18..
  */
 
+        import java.io.IOException;
+        import java.io.InputStream;
         import java.util.ArrayList;
+        import java.util.Collections;
+        import java.util.Comparator;
         import java.util.List;
         import android.app.Activity;
+        import android.content.Context;
+        import android.content.Intent;
+        import android.content.res.AssetManager;
+        import android.graphics.Bitmap;
+        import android.graphics.BitmapFactory;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
         import android.support.v4.app.FragmentManager;
+        import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -17,22 +27,24 @@ package ch.lebo_apps.contactme;
         import android.widget.AdapterView.OnItemClickListener;
         import android.widget.AdapterView.OnItemLongClickListener;
         import android.widget.Button;
+        import android.widget.ImageButton;
         import android.widget.ImageView;
         import android.widget.ListView;
         import android.widget.Toast;
 
+        import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+
 public class ProductListFragment extends Fragment implements
-        OnItemClickListener, OnItemLongClickListener {
+        OnItemClickListener {
 
     public static final String ARG_ITEM_ID = "product_list";
-    private Fragment contentFragment;
+    protected Fragment contentFragment;
     Activity activity;
-    ListView productListView;
+    StickyListHeadersListView productListView;
     List<Product> products;
     ProductListAdapter productListAdapter;
-    Button b1;
+    ImageButton b1;
     FavoriteListFragment  favListFragment;
-    public String[] stockArr;
     SharedPreference sharedPreference;
 
     @Override
@@ -50,7 +62,7 @@ public class ProductListFragment extends Fragment implements
         findViewsById(view);
         setProducts();
 
-        b1=(Button)view.findViewById(R.id.favButton);
+        b1=(ImageButton)view.findViewById(R.id.favButton);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,31 +74,28 @@ public class ProductListFragment extends Fragment implements
         productListAdapter = new ProductListAdapter(activity, products);
         productListView.setAdapter(productListAdapter);
         productListView.setOnItemClickListener(this);
-        productListView.setOnItemLongClickListener(this);
         return view;
     }
 
     private void setProducts() {
-
-        Product product1 = new Product(1, "a Dell XPS", "Dell XPS Laptop", 60000);
-        Product product2 = new Product(2, "a HP Pavilion G6-2014TX",
-                "HP Pavilion G6-2014TX Laptop", 50000);
-        Product product3 = new Product(3, "b ProBook HP 4540",
-                "ProBook HP 4540 Laptop", 45000);
-        Product product4 = new Product(4, "b HP Envy 4-1025TX",
-                "HP Envy 4-1025TX Laptop", 46000);
-        Product product5 = new Product(5, "b Dell Inspiron",
-                "Dell Inspiron Laptop", 48000);
-        Product product6 = new Product(6, "c Dell Vostro", "Dell Vostro Laptop",
-                50000);
-        Product product7 = new Product(7, "c IdeaPad Z Series",
-                "Lenovo IdeaPad Z Series Laptop", 40000);
-        Product product8 = new Product(8, "c ThinkPad X Series",
-                "Lenovo ThinkPad X Series Laptop", 38000);
-        Product product9 = new Product(9, "d VAIO S Series",
-                "Sony VAIO S Series Laptop", 39000);
-        Product product10 = new Product(10, "d Series 5",
-                "Samsung Series 5 Laptop", 50000);
+        Product product1 = new Product(1, "Shelley B. Johnson", "620-688-8204", "pic1.png");
+        Product product2 = new Product(2, "Ronald M. Strout",
+                "713-513-7638", "pic2.png");
+        Product product3 = new Product(5, "Marc C. Dale",
+                "770-273-7513", "pic1.png");
+        Product product4 = new Product(6, "Wanda E. Barcenas", "770-273-7513", "pic2.png");
+        Product product5 = new Product(7, "James M. Pfister",
+                "620-688-8204", "pic3.png");
+        Product product6 = new Product(8, "David C. Davies",
+                "770-273-7513", "pic1.png");
+        Product product7 = new Product(9, "Eric C. Wysong",
+                "770-273-7513",  "pic2.png");
+        Product product8 = new Product(10, "Ruby J. Lombard",
+                "620-688-8204", "pic3.png");
+        Product product9 = new Product(10, "Samuel N. Andrews",
+                "337-294-5048", "pic1.png");
+        Product product10 = new Product(10, "Christine G. Ford",
+                "678-463-4837", "pic2.png");
 
         products = new ArrayList<Product>();
         products.add(product1);
@@ -99,21 +108,22 @@ public class ProductListFragment extends Fragment implements
         products.add(product8);
         products.add(product9);
         products.add(product10);
+
+        Collections.sort(products, new Comparator<Product>(){
+            public int compare(Product d1, Product d2){
+                return d1.getName().compareTo(d2.getName());
+            }
+        });
     }
 
     private void findViewsById(View view) {
-        productListView = (ListView) view.findViewById(R.id.list_product);
+        productListView = (StickyListHeadersListView) view.findViewById(R.id.list_product);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
-        Product product = (Product) parent.getItemAtPosition(position);
-        Toast.makeText(activity, product.toString(), Toast.LENGTH_LONG).show();
-    }
+
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> arg0, View view,
+    public void onItemClick(AdapterView<?> arg0, View view,
                                    int position, long arg3) {
         ImageView button = (ImageView) view.findViewById(R.id.imgbtn_favorite);
 
@@ -135,7 +145,6 @@ public class ProductListFragment extends Fragment implements
                     Toast.LENGTH_SHORT).show();
         }
 
-        return true;
     }
 
 

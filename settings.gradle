@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':StickyListHeaders'
+project(':StickyListHeaders').projectDir = new File('libs/StickyListHeaders')

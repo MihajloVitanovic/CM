@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/product_list_item_bg"
+    android:descendantFocusability="blocksDescendants" >
+
+    <RelativeLayout
+        android:id="@+id/pdt_layout_item"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:background="@drawable/item_bg">
+
+        <ImageView
+            android:id="@+id/contact_picture"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@null"
+            android:layout_centerInParent="true"
+            android:paddingBottom="20dp"/>
+
+        <TextView
+            android:id="@+id/txt_pdt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contact_picture"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:paddingRight="6dp"
+            android:paddingLeft="6dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/txt_pdt_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_pdt_name"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:paddingRight="6dp"
+            android:paddingLeft="6dp"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/imgbtn_favorite"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="20dp"
+            android:background="@null" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/pdt_layout_item" />
+
+</RelativeLayout>

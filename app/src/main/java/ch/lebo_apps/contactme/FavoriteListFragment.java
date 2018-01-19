@@ -4,34 +4,37 @@ package ch.lebo_apps.contactme;
  * Created by miki-ubuntu on 15.1.18..
  */
 
-        import java.util.ArrayList;
         import java.util.Collections;
+        import java.util.Comparator;
         import java.util.List;
-
         import android.app.Activity;
         import android.app.AlertDialog;
         import android.content.DialogInterface;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
+        import android.support.v4.app.FragmentManager;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.AdapterView;
         import android.widget.AdapterView.OnItemClickListener;
-        import android.widget.AdapterView.OnItemLongClickListener;
+        import android.widget.Button;
+        import android.widget.GridView;
+        import android.widget.ImageButton;
         import android.widget.ImageView;
-        import android.widget.ListView;
         import android.widget.Toast;
 
 public class FavoriteListFragment extends Fragment {
 
     public static final String ARG_ITEM_ID = "favorite_list";
-
-    ListView favoriteList;
+    protected Fragment contentFragment;
+    GridView favoriteList;
     SharedPreference sharedPreference;
     List<Product> favorites;
     Activity activity;
-    ProductListAdapter productListAdapter;
+    FavoriteListAdapter favoriteListAdapter;
+    ProductListFragment  productListFragment;
+    ImageButton b1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,11 +45,26 @@ public class FavoriteListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_product_list, container,
+        View view = inflater.inflate(R.layout.fragment_product_list2, container,
                 false);
         // Get favorite items from SharedPreferences.
         sharedPreference = new SharedPreference();
         favorites = sharedPreference.getFavorites(activity);
+
+        b1=(ImageButton)view.findViewById(R.id.favButton);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                productListFragment = new ProductListFragment();
+                switchContent(productListFragment, ProductListFragment.ARG_ITEM_ID);
+            }
+        });
+
+        Collections.sort(favorites, new Comparator<Product>(){
+            public int compare(Product d1, Product d2){
+                return d1.getName().compareTo(d2.getName());
+            }
+        });
 
         if (favorites == null) {
             showAlert(getResources().getString(R.string.no_favorites_items),
@@ -59,58 +77,30 @@ public class FavoriteListFragment extends Fragment {
                         getResources().getString(R.string.no_favorites_msg));
             }
 
-            favoriteList = (ListView) view.findViewById(R.id.list_product);
+            favoriteList = (GridView) view.findViewById(R.id.list_product2);
             if (favorites != null) {
-                productListAdapter = new ProductListAdapter(activity, favorites);
-                favoriteList.setAdapter(productListAdapter);
+                favoriteListAdapter = new FavoriteListAdapter(activity, favorites);
+                favoriteList.setAdapter(favoriteListAdapter);
 
                 favoriteList.setOnItemClickListener(new OnItemClickListener() {
 
-                    public void onItemClick(AdapterView<?> parent, View arg1,
+                    public void onItemClick(AdapterView<?> arg0, View view,
                                             int position, long arg3) {
+
+                        ImageView button = (ImageView) view.findViewById(R.id.imgbtn_favorite);
+
+                            sharedPreference.removeFavorite(activity, favorites.get(position));
+                            button.setTag("grey");
+                            button.setImageResource(R.drawable.heart_grey);
+                            favoriteListAdapter.remove(favorites.get(position));
+                            Toast.makeText(activity,
+                                    activity.getResources().getString(R.string.remove_favr),
+                                    Toast.LENGTH_SHORT).show();
 
                     }
                 });
 
-                favoriteList
-                        .setOnItemLongClickListener(new OnItemLongClickListener() {
 
-                            @Override
-                            public boolean onItemLongClick(
-                                    AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                                ImageView button = (ImageView) view
-                                        .findViewById(R.id.imgbtn_favorite);
-
-                                String tag = button.getTag().toString();
-                                if (tag.equalsIgnoreCase("grey")) {
-                                    sharedPreference.addFavorite(activity,
-                                            favorites.get(position));
-                                    Toast.makeText(
-                                            activity,
-                                            activity.getResources().getString(
-                                                    R.string.add_favr),
-                                            Toast.LENGTH_SHORT).show();
-
-                                    button.setTag("red");
-                                    button.setImageResource(R.drawable.heart_red);
-                                } else {
-                                    sharedPreference.removeFavorite(activity,
-                                            favorites.get(position));
-                                    button.setTag("grey");
-                                    button.setImageResource(R.drawable.heart_grey);
-                                    productListAdapter.remove(favorites
-                                            .get(position));
-                                    Toast.makeText(
-                                            activity,
-                                            activity.getResources().getString(
-                                                    R.string.remove_favr),
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                                return true;
-                            }
-                        });
             }
         }
 
@@ -137,6 +127,23 @@ public class FavoriteListFragment extends Fragment {
                         }
                     });
             alertDialog.show();
+        }
+    }
+
+    public void switchContent(Fragment fragment, String tag) {
+        FragmentManager fragmentManager = getFragmentManager();
+        while (fragmentManager.popBackStackImmediate());
+
+        if (fragment != null) {
+            android.support.v4.app.FragmentTransaction transaction = fragmentManager
+                    .beginTransaction();
+            transaction.replace(R.id.content_frame, fragment, tag);
+            //Only FavoriteListFragment is added to the back stack.
+            if (!(fragment instanceof ProductListFragment)) {
+                transaction.addToBackStack(tag);
+            }
+            transaction.commit();
+            contentFragment = fragment;
         }
     }
 

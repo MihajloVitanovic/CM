@@ -1,5 +1,8 @@
 package ch.lebo_apps.contactme;
 
+import android.graphics.Bitmap;
+import android.widget.ImageView;
+
 /**
  * Created by miki-ubuntu on 15.1.18..
  */
@@ -8,19 +11,19 @@ public class Product {
 
     private int id;
     private String name;
-    private String description;
-    private double price;
+    private String number;
+    private String image;
 
     public Product() {
         super();
     }
 
-    public Product(int id, String name, String description, double price) {
+    public Product(int id, String name, String number, String image) {
         super();
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.price = price;
+        this.number = number;
+        this.image = image;
     }
     public int getId() {
         return id;
@@ -38,20 +41,20 @@ public class Product {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNumber() {
+        return number;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public double getPrice() {
-        return price;
+    public String getImage() {
+        return image;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
@@ -78,7 +81,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product [id=" + id + ", name=" + name + ", description="
-                + description + ", price=" + price + "]";
+        return "Product [id=" + id + ", name=" + name + ", number=" + number + "]";
     }
 }
